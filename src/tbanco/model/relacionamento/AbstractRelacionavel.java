@@ -5,8 +5,9 @@
  */
 package tbanco.model.relacionamento;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.TreeSet;
 import tbanco.model.Atributos;
 
 /**
@@ -16,11 +17,11 @@ import tbanco.model.Atributos;
 public abstract class AbstractRelacionavel {
 
     private Atributos atributos;
-    private ArrayList<AbstractRelacionamento> relacionamentos;
+    private HashSet<AbstractRelacionamento> relacionamentos;
 
     public AbstractRelacionavel() {
         atributos = new Atributos();
-        relacionamentos = new ArrayList<>();
+        relacionamentos = new HashSet<>();
     }
 
     public Atributos getAtributos() {
@@ -35,7 +36,7 @@ public abstract class AbstractRelacionavel {
         relacionamentos.add(relacionamento);
     }
 
-    public void addAllRelacionamentos(ArrayList<AbstractRelacionamento> array) {
+    public void addAllRelacionamentos(TreeSet<AbstractRelacionamento> array) {
         array.addAll(relacionamentos);
     }
 

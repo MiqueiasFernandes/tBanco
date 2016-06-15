@@ -49,4 +49,9 @@ public class RelacionamentoBinario extends AbstractRelacionamento {
         return ar;
     }
 
+    @Override
+    public boolean isEntidadeOrigem(AbstractRelacionavel relacionavel) {
+        return origem.equals(relacionavel);
+    }
+
 }

@@ -54,4 +54,6 @@ public abstract class AbstractRelacionamento {
 
     public abstract AbstractRelacionavel[] getRelacionaveis();
 
+    public abstract boolean isEntidadeOrigem(AbstractRelacionavel relacionavel);
+
 }

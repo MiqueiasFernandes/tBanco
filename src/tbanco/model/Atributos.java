@@ -5,7 +5,7 @@
  */
 package tbanco.model;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 /**
@@ -14,10 +14,10 @@ import java.util.Iterator;
  */
 public class Atributos {
 
-    private ArrayList<Atributo> atributos;
+    private HashSet<Atributo> atributos;
 
     public Atributos() {
-        atributos = new ArrayList<>();
+        atributos = new HashSet<>();
     }
 
     public Iterator<Atributo> getAtributosIterator() {

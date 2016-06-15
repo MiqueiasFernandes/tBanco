@@ -16,6 +16,7 @@ public class TBanco {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new MainView().setVisible(true);
     }
     
 }

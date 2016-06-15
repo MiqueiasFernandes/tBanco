@@ -79,4 +79,9 @@ public class RelacionamentoTernario extends AbstractRelacionamento {
         return ar;
     }
 
+     @Override
+    public boolean isEntidadeOrigem(AbstractRelacionavel relacionavel) {
+        return topo.equals(relacionavel);
+    }
+    
 }

@@ -6,85 +6,87 @@ AS CARDINALIDADES MAXIMAS E MINNIMAS DEVEM SER TRATADAS A NIVEL DE APLICACAO-->
 
 <!-- root itens principais -->
 <!--DECLARAÇÃO DE TODAS AS ENTIDADES E RELACIONAMENTOS-->
-<root nome="MODELO_ENTIDADE_RELACIONAMENTO_DEMONSTRATIVO">
+<MODELO_ENTIDADE_RELACIONAMENTO_DEMONSTRATIVO>
+    <root>
        
-    <!--DECLARACAO DE TODAS ENTIDADES-->
-    <entidade nome="nome_da_entidade">
-        <atributo nome="nome_do_atributo">
-            <tipo>*#N</tipo>
-        </atributo>
-    </entidade>
+        <!--DECLARACAO DE TODAS ENTIDADES-->
+        <entidade nome="nome_da_entidade">
+            <atributo nome="nome_do_atributo">
+                <tipo>*#N</tipo>
+            </atributo>
+        </entidade>
  
-    <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
-    <relacionamento nome="nome_do_relacionamento">
-        <!--CASO SEJA UNÁRIO-->
-        <papel>papel_de_origem</papel>
-        <papel>papel_de_destino</papel>
-        <relacionavel>nome_do_relacionado</relacionavel>
-        <!--CASO SEJA BINARIO-->
-        <relacionavel>nome_do_origem_relacionado</relacionavel>
-        <relacionavel>nome_do_destino_relacionado</relacionavel>
-        <!--CASO SEJA TERNARIO-->
-        <relacionavel>nome_do_topo_relacionado</relacionavel>
-        <relacionavel>nome_do_esquerdo_relacionado</relacionavel>
-        <relacionavel>nome_do_direito_relacionado</relacionavel>
-        <!--DECLARAÇÃO DA CARDINALIDADE-->
-        <!--CASO UNARIO/BINARIO UM PRA UM OU TERNARIO 1 PRA 1 PRA 1 -->
-        <cardinalidade>1-1</cardinalidade>
-        <!-- CASO UNARIO/BINARIO UM PRA N -->
-        <cardinalidade>1-N</cardinalidade>
-        <!-- CASO UNARIO/BINARIO N PRA N OU TERNARIO N PRA N PRA N -->
-        <cardinalidade>N-N</cardinalidade>
-        <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
-        <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
-        <cardinalidade>1-1-N</cardinalidade>
-        <atributo nome="nome_do_atributo">
-            <tipo>*#N</tipo>
-        </atributo>
-    </relacionamento>
+        <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
+        <relacionamento nome="nome_do_relacionamento">
+            <!--CASO SEJA UNÁRIO-->
+            <papel>papel_de_origem</papel>
+            <papel>papel_de_destino</papel>
+            <relacionavel>nome_do_relacionado</relacionavel>
+            <!--CASO SEJA BINARIO-->
+            <relacionavel>nome_do_origem_relacionado</relacionavel>
+            <relacionavel>nome_do_destino_relacionado</relacionavel>
+            <!--CASO SEJA TERNARIO-->
+            <relacionavel>nome_do_topo_relacionado</relacionavel>
+            <relacionavel>nome_do_esquerdo_relacionado</relacionavel>
+            <relacionavel>nome_do_direito_relacionado</relacionavel>
+            <!--DECLARAÇÃO DA CARDINALIDADE-->
+            <!--CASO UNARIO/BINARIO UM PRA UM OU TERNARIO 1 PRA 1 PRA 1 -->
+            <cardinalidade>1-1</cardinalidade>
+            <!-- CASO UNARIO/BINARIO UM PRA N -->
+            <cardinalidade>1-N</cardinalidade>
+            <!-- CASO UNARIO/BINARIO N PRA N OU TERNARIO N PRA N PRA N -->
+            <cardinalidade>N-N</cardinalidade>
+            <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
+            <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
+            <cardinalidade>1-1-N</cardinalidade>
+            <atributo nome="nome_do_atributo">
+                <tipo>*#N</tipo>
+            </atributo>
+        </relacionamento>
        
-</root>
+    </root>
 
-<agregacao nome="nome_da_agregacao">
+    <agregacao nome="nome_da_agregacao">
    
-    <!--DECLARAÇÃO DOS ATRIBUTOS-->
-    <cardinalidade>1-1-N</cardinalidade>
-    <atributo nome="nome_do_atributo">
-        <tipo>*#N</tipo>
-    </atributo>
-    
-    <!--DECLARACAO DE TODAS ENTIDADES-->
-    <entidade nome="nome_da_entidade">
-        <atributo nome="nome_do_atributo">
-            <tipo>*#N</tipo>
-        </atributo>
-    </entidade>
- 
-    <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
-    <relacionamento nome="nome_do_relacionamento">
-        <!--CASO SEJA UNÁRIO-->
-        <papel>papel_de_origem</papel>
-        <papel>papel_de_destino</papel>
-        <relacionavel>nome_do_relacionado</relacionavel>
-        <!--CASO SEJA BINARIO-->
-        <relacionavel>nome_do_origem_relacionado</relacionavel>
-        <relacionavel>nome_do_destino_relacionado</relacionavel>
-        <!--CASO SEJA TERNARIO-->
-        <relacionavel>nome_do_topo_relacionado</relacionavel>
-        <relacionavel>nome_do_esquerdo_relacionado</relacionavel>
-        <relacionavel>nome_do_direito_relacionado</relacionavel>
-        <!--DECLARAÇÃO DA CARDINALIDADE-->
-        <!--CASO UNARIO/BINARIO UM PRA UM OU TERNARIO 1 PRA 1 PRA 1 -->
-        <cardinalidade>1-1</cardinalidade>
-        <!-- CASO UNARIO/BINARIO UM PRA N -->
-        <cardinalidade>1-N</cardinalidade>
-        <!-- CASO UNARIO/BINARIO N PRA N OU TERNARIO N PRA N PRA N -->
-        <cardinalidade>N-N</cardinalidade>
-        <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
-        <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
+        <!--DECLARAÇÃO DOS ATRIBUTOS-->
         <cardinalidade>1-1-N</cardinalidade>
         <atributo nome="nome_do_atributo">
             <tipo>*#N</tipo>
         </atributo>
-    </relacionamento>
-</agregacao>
+    
+        <!--DECLARACAO DE TODAS ENTIDADES-->
+        <entidade nome="nome_da_entidade">
+            <atributo nome="nome_do_atributo">
+                <tipo>*#N</tipo>
+            </atributo>
+        </entidade>
+ 
+        <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
+        <relacionamento nome="nome_do_relacionamento">
+            <!--CASO SEJA UNÁRIO-->
+            <papel>papel_de_origem</papel>
+            <papel>papel_de_destino</papel>
+            <relacionavel>nome_do_relacionado</relacionavel>
+            <!--CASO SEJA BINARIO-->
+            <relacionavel>nome_do_origem_relacionado</relacionavel>
+            <relacionavel>nome_do_destino_relacionado</relacionavel>
+            <!--CASO SEJA TERNARIO-->
+            <relacionavel>nome_do_topo_relacionado</relacionavel>
+            <relacionavel>nome_do_esquerdo_relacionado</relacionavel>
+            <relacionavel>nome_do_direito_relacionado</relacionavel>
+            <!--DECLARAÇÃO DA CARDINALIDADE-->
+            <!--CASO UNARIO/BINARIO UM PRA UM OU TERNARIO 1 PRA 1 PRA 1 -->
+            <cardinalidade>1-1</cardinalidade>
+            <!-- CASO UNARIO/BINARIO UM PRA N -->
+            <cardinalidade>1-N</cardinalidade>
+            <!-- CASO UNARIO/BINARIO N PRA N OU TERNARIO N PRA N PRA N -->
+            <cardinalidade>N-N</cardinalidade>
+            <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
+            <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
+            <cardinalidade>1-1-N</cardinalidade>
+            <atributo nome="nome_do_atributo">
+                <tipo>*#N</tipo>
+            </atributo>
+        </relacionamento>
+    </agregacao>
+</MODELO_ENTIDADE_RELACIONAMENTO_DEMONSTRATIVO>

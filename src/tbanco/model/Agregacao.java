@@ -7,7 +7,7 @@ package tbanco.model;
 
 import tbanco.model.relacionamento.AbstractRelacionavel;
 import tbanco.model.relacionamento.AbstractRelacionamento;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 /**
@@ -17,11 +17,11 @@ import java.util.Iterator;
 public class Agregacao extends AbstractRelacionavel {
 
     private String nome;
-    private ArrayList<Entidade> entidades;
+    private HashSet<Entidade> entidades;
 
     public Agregacao(String nome) {
         this.nome = nome;
-        this.entidades = new ArrayList<>();
+        this.entidades = new HashSet<>();
     }
 
     public String getNome() {
@@ -101,7 +101,7 @@ public class Agregacao extends AbstractRelacionavel {
         return true;
     }
 
-    public void addAllEntidades(ArrayList<Entidade> array) {
+    public void addAllEntidades(HashSet<Entidade> array) {
         array.addAll(entidades);
     }
 

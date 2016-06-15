@@ -14,7 +14,7 @@ import java.util.Iterator;
  */
 public class Entidade extends AbstractRelacionavel {
 
-    private String nome, tipo;
+    private String nome, tipo = null;
 
     public Entidade(String nome) {
         this.nome = nome;
@@ -30,10 +30,12 @@ public class Entidade extends AbstractRelacionavel {
     }
 
     public Entidade getSuperTipo(Iterator<Entidade> entidades) {
-        while (entidades.hasNext()) {
-            Entidade next = entidades.next();
-            if (next.getNome().equalsIgnoreCase(tipo)) {
-                return next;
+        if (tipo != null) {
+            while (entidades.hasNext()) {
+                Entidade next = entidades.next();
+                if (next.getNome().equalsIgnoreCase(tipo)) {
+                    return next;
+                }
             }
         }
         return null;
