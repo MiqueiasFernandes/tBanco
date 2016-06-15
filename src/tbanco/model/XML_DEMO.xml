@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--XML DE TESTE-->
-<!--NÃO PODE TER ENTIDADES COM MESMO NOME,
+<!--NÃO PODE TER ENTIDADES E AGREGACOES COM MESMO NOME,
 AS CARDINALIDADES MAXIMAS E MINNIMAS DEVEM SER TRATADAS A NIVEL DE APLICACAO-->
 
 <!-- root itens principais -->
@@ -11,9 +11,11 @@ AS CARDINALIDADES MAXIMAS E MINNIMAS DEVEM SER TRATADAS A NIVEL DE APLICACAO-->
        
         <!--DECLARACAO DE TODAS ENTIDADES-->
         <entidade nome="nome_da_entidade">
-            <atributo nome="nome_do_atributo">
-                <tipo>*#N</tipo>
-            </atributo>
+            <atributo restricao="nkf">nome</atributo>
+        </entidade>
+        
+        <entidade nome="nome_do_subtipo" tipo="nome_da_entidade">
+            <atributo restricao="nkf" tipo="string">nome</atributo>
         </entidade>
  
         <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
@@ -22,26 +24,27 @@ AS CARDINALIDADES MAXIMAS E MINNIMAS DEVEM SER TRATADAS A NIVEL DE APLICACAO-->
             <papel>papel_de_origem</papel>
             <papel>papel_de_destino</papel>
             <relacionavel>nome_do_relacionado</relacionavel>
+        </relacionamento>
+        
+        <relacionamento nome="relacionamento binario">
             <!--CASO SEJA BINARIO-->
             <relacionavel>nome_do_origem_relacionado</relacionavel>
             <relacionavel>nome_do_destino_relacionado</relacionavel>
+            
+            <atributo nome="nome_do_atributo">
+                <tipo>*#N</tipo>
+            </atributo>
+        </relacionamento>
+        
+        <relacionamento nome="relacionamento ternario">  
             <!--CASO SEJA TERNARIO-->
             <relacionavel>nome_do_topo_relacionado</relacionavel>
             <relacionavel>nome_do_esquerdo_relacionado</relacionavel>
             <relacionavel>nome_do_direito_relacionado</relacionavel>
             <!--DECLARAÇÃO DA CARDINALIDADE-->
-            <!--CASO UNARIO/BINARIO UM PRA UM OU TERNARIO 1 PRA 1 PRA 1 -->
-            <cardinalidade>1-1</cardinalidade>
-            <!-- CASO UNARIO/BINARIO UM PRA N -->
-            <cardinalidade>1-N</cardinalidade>
-            <!-- CASO UNARIO/BINARIO N PRA N OU TERNARIO N PRA N PRA N -->
-            <cardinalidade>N-N</cardinalidade>
             <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
             <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
             <cardinalidade>1-1-N</cardinalidade>
-            <atributo nome="nome_do_atributo">
-                <tipo>*#N</tipo>
-            </atributo>
         </relacionamento>
        
     </root>
@@ -62,25 +65,12 @@ AS CARDINALIDADES MAXIMAS E MINNIMAS DEVEM SER TRATADAS A NIVEL DE APLICACAO-->
         </entidade>
  
         <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
-        <relacionamento nome="nome_do_relacionamento">
-            <!--CASO SEJA UNÁRIO-->
-            <papel>papel_de_origem</papel>
-            <papel>papel_de_destino</papel>
-            <relacionavel>nome_do_relacionado</relacionavel>
-            <!--CASO SEJA BINARIO-->
-            <relacionavel>nome_do_origem_relacionado</relacionavel>
-            <relacionavel>nome_do_destino_relacionado</relacionavel>
+        <relacionamento nome="relacionamento ternario da agregacao">
             <!--CASO SEJA TERNARIO-->
             <relacionavel>nome_do_topo_relacionado</relacionavel>
             <relacionavel>nome_do_esquerdo_relacionado</relacionavel>
             <relacionavel>nome_do_direito_relacionado</relacionavel>
-            <!--DECLARAÇÃO DA CARDINALIDADE-->
-            <!--CASO UNARIO/BINARIO UM PRA UM OU TERNARIO 1 PRA 1 PRA 1 -->
-            <cardinalidade>1-1</cardinalidade>
-            <!-- CASO UNARIO/BINARIO UM PRA N -->
-            <cardinalidade>1-N</cardinalidade>
-            <!-- CASO UNARIO/BINARIO N PRA N OU TERNARIO N PRA N PRA N -->
-            <cardinalidade>N-N</cardinalidade>
+            
             <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
             <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
             <cardinalidade>1-1-N</cardinalidade>

@@ -28,6 +28,10 @@ public class RelacionamentoTernario extends AbstractRelacionamento {
         this.cardinalidade_topo = super.cardinalidade.split("-")[0].charAt(0);
         this.cardinalidade_esquerdo = super.cardinalidade.split("-")[1].charAt(0);
         this.cardinalidade_direito = super.cardinalidade.split("-")[2].charAt(0);
+
+        topo.addRelacionamento(this);
+        esquerdo.addRelacionamento(this);
+        direito.addRelacionamento(this);
     }
 
     @Override
@@ -72,16 +76,16 @@ public class RelacionamentoTernario extends AbstractRelacionamento {
         }
 
     }
-    
+
     @Override
     public AbstractRelacionavel[] getRelacionaveis() {
         AbstractRelacionavel[] ar = {topo, esquerdo, direito};
         return ar;
     }
 
-     @Override
+    @Override
     public boolean isEntidadeOrigem(AbstractRelacionavel relacionavel) {
         return topo.equals(relacionavel);
     }
-    
+
 }

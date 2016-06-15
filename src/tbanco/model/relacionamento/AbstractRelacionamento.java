@@ -5,13 +5,15 @@
  */
 package tbanco.model.relacionamento;
 
+import tbanco.model.Atributo;
 import tbanco.model.Atributos;
+import tbanco.model.IAtributavel;
 
 /**
  *
  * @author mfernandes
  */
-public abstract class AbstractRelacionamento {
+public abstract class AbstractRelacionamento implements IAtributavel {
 
     public static enum TIPO_DE_RELACIONAMENTO {
         UNARIO,
@@ -48,8 +50,14 @@ public abstract class AbstractRelacionamento {
         return nome_relacionamento;
     }
 
+    @Override
     public Atributos getAtributos() {
         return atributos;
+    }
+
+    @Override
+    public void addAtributo(Atributo atributo) {
+        atributos.addAtributo(atributo);
     }
 
     public abstract AbstractRelacionavel[] getRelacionaveis();

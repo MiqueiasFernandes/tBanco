@@ -7,14 +7,14 @@ package tbanco.model;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.TreeSet;
 import tbanco.model.relacionamento.AbstractRelacionamento;
+import tbanco.model.relacionamento.AbstractRelacionavel;
 
 /**
  *
  * @author mfernandes
  */
-public class ModEntRel {
+public class ModEntRel implements IEntidavel {
 
     private HashSet<Agregacao> agregacoes;
     private HashSet<Entidade> entidades;
@@ -31,7 +31,8 @@ public class ModEntRel {
         agregacoes.add(agregacao);
     }
 
-    void addEntidade(Entidade entidade) {
+    @Override
+    public void addEntidade(Entidade entidade) {
         entidades.add(entidade);
     }
 
@@ -43,7 +44,7 @@ public class ModEntRel {
         return agregacoes.iterator();
     }
 
-    public HashSet<Entidade> getTodasEntidades() {
+    public Iterator<Entidade> getTodasEntidades() {
         HashSet<Entidade> tEnt = new HashSet<>(entidades);
 
         Iterator<Agregacao> it = getAgregacoesIterator();
@@ -53,29 +54,36 @@ public class ModEntRel {
             next.addAllEntidades(tEnt);
         }
 
-        return tEnt;
+        return tEnt.iterator();
     }
 
-    public TreeSet<AbstractRelacionamento> getTodosRelacionamento() {
-        TreeSet<AbstractRelacionamento> array = new TreeSet<>();
+    public Iterator<AbstractRelacionamento> getTodosRelacionamentos() {
+        HashSet<AbstractRelacionamento> array = new HashSet<>();
 
-        addEntidades(array, getEntidadesIterator());
+        addRelacionamentoDeEntidades(array, getEntidadesIterator());
 
         Iterator<Agregacao> it = getAgregacoesIterator();
 
         while (it.hasNext()) {
             Agregacao next = it.next();
-            addEntidades(array, next.getEntidadesIterator());
+            addRelacionamentoDeEntidades(array, next.getEntidadesIterator());
         }
 
-        return array;
+        return array.iterator();
     }
 
-    void addEntidades(TreeSet<AbstractRelacionamento> array, Iterator<Entidade> it) {
+    void addRelacionamentoDeEntidades(HashSet<AbstractRelacionamento> array, Iterator<Entidade> it) {
         while (it.hasNext()) {
             Entidade next = it.next();
             next.addAllRelacionamentos(array);
         }
+    }
+
+    public Iterator<AbstractRelacionavel> getRelacionaveis() {
+        HashSet<AbstractRelacionavel> relacionaveis = new HashSet<>();
+        relacionaveis.addAll(entidades);
+        relacionaveis.addAll(agregacoes);
+        return relacionaveis.iterator();
     }
 
 }

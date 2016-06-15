@@ -25,6 +25,7 @@ public class Entidade extends AbstractRelacionavel {
         this.tipo = tipo;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }

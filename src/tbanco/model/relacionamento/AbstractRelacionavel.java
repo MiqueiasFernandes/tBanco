@@ -7,14 +7,15 @@ package tbanco.model.relacionamento;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.TreeSet;
+import tbanco.model.Atributo;
 import tbanco.model.Atributos;
+import tbanco.model.IAtributavel;
 
 /**
  *
  * @author mfernandes
  */
-public abstract class AbstractRelacionavel {
+public abstract class AbstractRelacionavel implements IAtributavel {
 
     private Atributos atributos;
     private HashSet<AbstractRelacionamento> relacionamentos;
@@ -24,8 +25,14 @@ public abstract class AbstractRelacionavel {
         relacionamentos = new HashSet<>();
     }
 
+    @Override
     public Atributos getAtributos() {
         return atributos;
+    }
+
+    @Override
+    public void addAtributo(Atributo atributo) {
+        atributos.addAtributo(atributo);
     }
 
     public Iterator<AbstractRelacionamento> getRelacionamentosIterator() {
@@ -36,7 +43,7 @@ public abstract class AbstractRelacionavel {
         relacionamentos.add(relacionamento);
     }
 
-    public void addAllRelacionamentos(TreeSet<AbstractRelacionamento> array) {
+    public void addAllRelacionamentos(HashSet<AbstractRelacionamento> array) {
         array.addAll(relacionamentos);
     }
 
@@ -45,5 +52,7 @@ public abstract class AbstractRelacionavel {
     public abstract boolean isEntidade();
 
     public abstract boolean isAgregacao();
+
+    public abstract String getNome();
 
 }

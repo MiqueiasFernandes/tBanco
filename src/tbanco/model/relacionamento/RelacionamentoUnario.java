@@ -23,6 +23,7 @@ public class RelacionamentoUnario extends AbstractRelacionamento {
         this.cardinalidade_origem = cardinalidade.split("-")[0].charAt(0);
         this.cardinalidade_destino = cardinalidade.split("-")[1].charAt(0);
         this.relacionavel = relacionavel;
+        relacionavel.addRelacionamento(this);
     }
 
     @Override
@@ -54,6 +55,10 @@ public class RelacionamentoUnario extends AbstractRelacionamento {
     @Override
     public boolean isEntidadeOrigem(AbstractRelacionavel relacionavel) {
         return relacionavel.equals(relacionavel);
+    }
+
+    public boolean hasPapel() {
+        return papelOrigem != null && papelDestino != null;
     }
 
 }

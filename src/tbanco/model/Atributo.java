@@ -11,23 +11,35 @@ package tbanco.model;
  */
 public class Atributo {
 
-    private String nome, source;
+    private String nome, source = null, tipo = null;
 
-    private boolean nao_nulo, chave_primaria, chave_estrangeira;
+    private boolean nao_nulo = false, chave_primaria = false, chave_estrangeira = false;
+
+    public Atributo(String nome) {
+        this.nome = nome;
+    }
 
     public Atributo(String nome, String source) {
         this.nome = nome;
-        this.source = source;
 
-        if (source.contains("n") || source.contains("N")) {
-            nao_nulo = true;
+        if (source != null) {
+            this.source = source = source.toUpperCase();
+
+            if (source.contains("N")) {
+                nao_nulo = true;
+            }
+            if (source.contains("#")) {
+                chave_estrangeira = true;
+            }
+            if (source.contains("*")) {
+                chave_primaria = true;
+            }
         }
-        if (source.contains("#")) {
-            chave_estrangeira = true;
-        }
-        if (source.contains("*")) {
-            chave_primaria = true;
-        }
+    }
+
+    public Atributo(String nome, String source, String tipo) {
+        this(nome, source);
+        this.tipo = tipo;
     }
 
     public String getNome() {
@@ -45,4 +57,13 @@ public class Atributo {
     public boolean isChave_estrangeira() {
         return chave_estrangeira;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
 }

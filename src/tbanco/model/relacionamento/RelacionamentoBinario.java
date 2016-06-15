@@ -21,6 +21,9 @@ public class RelacionamentoBinario extends AbstractRelacionamento {
         this.destino = destino;
         this.cardinalidade_origem = cardinalidade.split("-")[0].charAt(0);
         this.cardinalidade_destino = cardinalidade.split("-")[1].charAt(0);
+
+        origem.addRelacionamento(this);
+        destino.addRelacionamento(this);
     }
 
     @Override
