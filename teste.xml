@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<modeloentidaderelacionamento>
+    <root>
+        <entidade nome="pessoa">
+            <atributo  restricao="nkf" tipo="string">nome</atributo>
+            <atributo  restricao="f" tipo="string">endereço</atributo>
+            <atributo tipo="string">telefone</atributo>
+            <atributo  restricao="n">sexo</atributo>
+        </entidade>
+        <relacionamento nome="matrimonio">
+            <origem cardinalidade="1">pessoa</origem>
+            <destino cardinalidade="1">pessoa</destino>
+            <papel>esposo</papel>
+        </relacionamento>
+        <relacionamento nome="supervisor">
+            <origem cardinalidade="1">pessoa</origem>
+            <destino cardinalidade="*">pessoa</destino>
+            <atributo  restricao="n">sexo</atributo>
+        </relacionamento>
+        <entidade nome="departamento" tipo="pessoa">
+            <atributo  restricao="nkf">gerente</atributo>
+            <atributo  restricao="n">sexo</atributo>
+        </entidade>
+        <entidade nome="area">
+            <atributo  restricao="nkf">nome</atributo>
+            <atributo  restricao="n">numero</atributo>
+        </entidade>
+        <relacionamento nome="entfraca">
+            <origem cardinalidade="1">area</origem>
+            <destino cardinalidade="*">departamento</destino>
+            <atributo  restricao="n">mesa</atributo>
+        </relacionamento>
+    </root>
+    <agregacao nome="aluno">
+        <atributos>
+            <atributo tipo="string">escola</atributo>
+            <atributo  restricao="n">sala</atributo>
+        </atributos>
+        <entidade nome="professor">
+            <atributo  restricao="nkf" tipo="string">nome</atributo>
+            <atributo  restricao="f" tipo="string">endereço</atributo>
+            <atributo tipo="string">telefone</atributo>
+            <atributo  restricao="n">sexo</atributo>
+        </entidade>
+        <relacionamento nome="estudar">
+            <origem cardinalidade="1">professor</origem>
+            <destino cardinalidade="1">professor</destino>
+            <papel>orientador</papel>
+            <atributo  restricao="n">sexo</atributo>
+        </relacionamento>
+        <relacionamento nome="conexao">
+            <origem cardinalidade="*">aluno</origem>
+            <destino cardinalidade="*">pessoa</destino>
+            <atributo  restricao="nfk">atua</atributo>
+        </relacionamento>
+    </agregacao>
+</modeloentidaderelacionamento>
+
