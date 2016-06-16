@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import tbanco.chain.MERProcessor;
 import tbanco.model.Agregacao;
 import tbanco.model.Atributo;
 import tbanco.model.Entidade;
@@ -45,6 +46,7 @@ public class MainView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -78,6 +80,12 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("...");
+        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel1.setOpaque(true);
+
         jMenu1.setText("Arquivo");
 
         jMenuItem1.setText("Importar XML");
@@ -107,9 +115,15 @@ public class MainView extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(103, 103, 103))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +131,10 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3)
                 .addContainerGap())
@@ -207,12 +224,62 @@ public class MainView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        MERProcessor processor = new MERProcessor();
+
+        if (modeloEntidadeRelacionamento != null) {
+            processor.tratar(modeloEntidadeRelacionamento);
+        }
+
+        Iterator<Entidade> entidades = modeloEntidadeRelacionamento.getTabelaIterator();
+
+        String modelo = "<html><body>\n";
+
+        while (entidades.hasNext()) {
+            Entidade tabela = entidades.next();
+            String tbl = "<br>\n" + tabela.getNome() + " [ ";
+
+            Iterator<Atributo> atributos = tabela.getAtributos().getAtributosIterator();
+
+            while (atributos.hasNext()) {
+                Atributo atributo = atributos.next();
+                if (atributo.isNao_nulo()) {
+                    tbl += "<u>";
+                }
+
+                if (atributo.isChave_estrangeira()) {
+                    tbl += "#";
+                }
+
+                if (atributo.isChave_primaria()) {
+                    tbl += "*";
+                }
+
+                tbl += atributo.getNome();
+
+                if (atributo.isNao_nulo()) {
+                    tbl += "</u>";
+                }
+
+                if (atributos.hasNext()) {
+                    tbl += ", ";
+                }
+
+            }
+            tbl += " ]";
+            modelo += tbl;
+        }
+        modelo += "</body></html>";
+
+        jLabel1.setText(modelo);
+        jLabel1.repaint();
+        System.out.println(modelo);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

@@ -18,6 +18,7 @@ public class ModEntRel implements IEntidavel, IRelacionavel {
 
     private HashSet<Agregacao> agregacoes;
     private HashSet<Entidade> entidades;
+    private HashSet<Entidade> tabelas;
 
     String nome;
 
@@ -25,6 +26,7 @@ public class ModEntRel implements IEntidavel, IRelacionavel {
         this.nome = nome;
         agregacoes = new HashSet<>();
         entidades = new HashSet<>();
+        tabelas = new HashSet<>();
     }
 
     public String getNome() {
@@ -93,6 +95,14 @@ public class ModEntRel implements IEntidavel, IRelacionavel {
 
     public boolean hasAgregacoes() {
         return agregacoes.size() > 0;
+    }
+
+    public void addTabela(Entidade entidade) {
+        tabelas.add(entidade);
+    }
+
+    public Iterator<Entidade> getTabelaIterator() {
+        return tabelas.iterator();
     }
 
 }
