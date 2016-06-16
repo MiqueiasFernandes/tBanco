@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--XML DE TESTE-->
+<!--NÃO PODE TER ENTIDADES E AGREGACOES COM MESMO NOME,
+AS CARDINALIDADES MAXIMAS E MINNIMAS DEVEM SER TRATADAS A NIVEL DE APLICACAO-->
+
+<!-- root itens principais -->
+<!--DECLARAÇÃO DE TODAS AS ENTIDADES E RELACIONAMENTOS-->
+<MODELO_ENTIDADE_RELACIONAMENTO>
+    <root>
+
+        <!--DECLARACAO DE TODAS ENTIDADES-->
+        <entidade nome="pessoa">
+            <atributo restricao="n*">nome</atributo>
+            <atributo restricao="n">endereco</atributo>
+            <atributo restricao="nkf">telefone</atributo>
+            <atributo>sexo</atributo>
+        </entidade>
+        <entidade nome="funcionario" tipo="pessoa">
+            <atributo restricao="n*f">cargo</atributo>
+            <atributo restricao="n">categoria</atributo>
+            <atributo>sexo</atributo>
+        </entidade>
+        <entidade nome="departamento">
+            <atributo restricao="n*">nome</atributo>
+            <atributo restricao="n#">gerente</atributo>
+        </entidade>
+        <entidade nome="salario">
+            <atributo restricao="n*">cargo</atributo>
+            <atributo restricao="n">salario</atributo>
+        </entidade>
+        
+ 
+        <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
+        <relacionamento nome="supervisao">
+            <!--CASO SEJA UNÁRIO-->
+            <papel>supervisor</papel>
+            <papel>supervisionado</papel>
+            <relacionavel>funcionario</relacionavel>
+            <cardinalidade>1-N</cardinalidade>
+        </relacionamento>
+        
+        <relacionamento nome="departamental">
+            <!--CASO SEJA BINARIO-->
+            <relacionavel>funcionario</relacionavel>
+            <relacionavel>departamento</relacionavel>
+            <cardinalidade>1-1</cardinalidade>
+        </relacionamento>
+        
+        <relacionamento nome="relacionamento ternario">  
+            <!--CASO SEJA TERNARIO-->
+            <relacionavel>funcionario</relacionavel>
+            <relacionavel>departamento</relacionavel>
+            <relacionavel>salario</relacionavel>
+            <!--DECLARAÇÃO DA CARDINALIDADE-->
+            <!-- CASO TERNARIO: DECLARAR TOPO,ESQUERDA,DIREITA SEPARADOS POR - -->
+            <!--DECLARAÇÃO DOS ATRIBUTOS DESTE RELACIONAMENTO-->
+            <cardinalidade>N-N-N</cardinalidade>
+            <atributo>relacao</atributo>
+        </relacionamento>
+       
+    </root>
+
+</MODELO_ENTIDADE_RELACIONAMENTO>

@@ -47,6 +47,10 @@ public abstract class AbstractRelacionavel implements IAtributavel {
         array.addAll(relacionamentos);
     }
 
+    public boolean hasRelacionamentos() {
+        return relacionamentos.size() > 0;
+    }
+
     public abstract boolean equals(AbstractRelacionavel other);
 
     public abstract boolean isEntidade();

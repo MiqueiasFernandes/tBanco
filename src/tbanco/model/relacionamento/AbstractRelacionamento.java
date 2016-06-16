@@ -64,4 +64,9 @@ public abstract class AbstractRelacionamento implements IAtributavel {
 
     public abstract boolean isEntidadeOrigem(AbstractRelacionavel relacionavel);
 
+    @Override
+    public String toString() {
+        return "AbstractRelacionamento{" + "nome_relacionamento=" + nome_relacionamento + ", cardinalidade=" + cardinalidade + '}';
+    }
+
 }

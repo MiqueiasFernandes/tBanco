@@ -66,4 +66,9 @@ public class Atributo {
         return source;
     }
 
+    @Override
+    public String toString() {
+        return "Atributo{" + "nome=" + nome + ", source=" + source + ", tipo=" + tipo + '}';
+    }
+
 }

@@ -60,4 +60,13 @@ public class Entidade extends AbstractRelacionavel {
     public boolean isAgregacao() {
         return false;
     }
+
+    public boolean isSubtipo() {
+        return tipo != null;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
 }

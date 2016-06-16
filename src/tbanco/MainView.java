@@ -5,11 +5,18 @@
  */
 package tbanco;
 
-import java.util.HashSet;
+import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import tbanco.model.Agregacao;
+import tbanco.model.Atributo;
+import tbanco.model.Entidade;
+import tbanco.model.IAtributavel;
+import tbanco.model.ModEntRel;
+import tbanco.model.relacionamento.AbstractRelacionamento;
+import tbanco.model.relacionamento.AbstractRelacionavel;
 
 /**
  *
@@ -119,28 +126,90 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
-    
+
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         JFileChooser jf = new JFileChooser("./");
-
         jf.showOpenDialog(this);
-
-        XMLReader.importMER(jf.getSelectedFile(), jTextArea1);
-
+        modeloEntidadeRelacionamento = XMLReader.importMER(jf.getSelectedFile(), jTextArea1);
         JOptionPane.showMessageDialog(this, "Modelo importado com sucesso!");
-
-       
-
+        popularTree();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    ModEntRel modeloEntidadeRelacionamento = null;
+
+    void popularTree() {
+
+        if (modeloEntidadeRelacionamento != null) {
+
+            DefaultMutableTreeNode root = new DefaultMutableTreeNode(modeloEntidadeRelacionamento.getNome());
+
+            addEntidades(root, modeloEntidadeRelacionamento.getEntidadesIterator());
+
+            if (modeloEntidadeRelacionamento.hasAgregacoes()) {
+                DefaultMutableTreeNode agregacoes = new DefaultMutableTreeNode("agregacoes");
+
+                Iterator<Agregacao> agregacoesIT = modeloEntidadeRelacionamento.getAgregacoesIterator();
+
+                while (agregacoesIT.hasNext()) {
+                    Agregacao agregacao = agregacoesIT.next();
+
+                    DefaultMutableTreeNode agreg = new DefaultMutableTreeNode(agregacao.getNome());
+
+                    addAtributos(agregacao, agreg);
+                    addRelacionamentos(agregacao, agreg);
+                    addEntidades(agreg, agregacao.getEntidadesIterator());
+
+                    agregacoes.add(agreg);
+                }
+                root.add(agregacoes);
+            }
+            jTree1.setModel(new DefaultTreeModel(root));
+            jTree1.invalidate();
+        }
+    }
+
+    void addEntidades(DefaultMutableTreeNode root, Iterator<Entidade> entidades) {
+
+        while (entidades.hasNext()) {
+            Entidade entidade = entidades.next();
+
+            DefaultMutableTreeNode ent = new DefaultMutableTreeNode(entidade.getNome()
+                    + (entidade.isSubtipo() ? " (" + entidade.getTipo() + ")" : ""));
+
+            addAtributos(entidade, ent);
+            if (entidade.hasRelacionamentos()) {
+                addRelacionamentos(entidade, ent);
+            }
+            root.add(ent);
+        }
+    }
+
+    void addAtributos(IAtributavel atributavel, DefaultMutableTreeNode ent) {
+        Iterator<Atributo> atributos = atributavel.getAtributos().getAtributosIterator();
+        while (atributos.hasNext()) {
+            Atributo atributo = atributos.next();
+            ent.add(new DefaultMutableTreeNode(atributo.toString()));
+        }
+    }
+
+    void addRelacionamentos(AbstractRelacionavel relacionavel, DefaultMutableTreeNode root) {
+        DefaultMutableTreeNode rel = new DefaultMutableTreeNode("Relacionamentos");
+        Iterator<AbstractRelacionamento> relacionamentos = relacionavel.getRelacionamentosIterator();
+        while (relacionamentos.hasNext()) {
+            AbstractRelacionamento relacionamento = relacionamentos.next();
+            DefaultMutableTreeNode relac = new DefaultMutableTreeNode(relacionamento.toString());
+            addAtributos(relacionamento, relac);
+            rel.add(relac);
+        }
+        root.add(rel);
+    }
+
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-       
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

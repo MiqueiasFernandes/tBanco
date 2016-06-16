@@ -14,7 +14,7 @@ import tbanco.model.relacionamento.AbstractRelacionavel;
  *
  * @author mfernandes
  */
-public class ModEntRel implements IEntidavel {
+public class ModEntRel implements IEntidavel, IRelacionavel {
 
     private HashSet<Agregacao> agregacoes;
     private HashSet<Entidade> entidades;
@@ -25,6 +25,10 @@ public class ModEntRel implements IEntidavel {
         this.nome = nome;
         agregacoes = new HashSet<>();
         entidades = new HashSet<>();
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     void addAgregacao(Agregacao agregacao) {
@@ -79,11 +83,16 @@ public class ModEntRel implements IEntidavel {
         }
     }
 
+    @Override
     public Iterator<AbstractRelacionavel> getRelacionaveis() {
         HashSet<AbstractRelacionavel> relacionaveis = new HashSet<>();
         relacionaveis.addAll(entidades);
         relacionaveis.addAll(agregacoes);
         return relacionaveis.iterator();
+    }
+
+    public boolean hasAgregacoes() {
+        return agregacoes.size() > 0;
     }
 
 }

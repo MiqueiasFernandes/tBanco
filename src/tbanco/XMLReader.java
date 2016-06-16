@@ -7,7 +7,6 @@ package tbanco;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
@@ -23,6 +22,7 @@ import tbanco.model.Atributo;
 import tbanco.model.Entidade;
 import tbanco.model.IAtributavel;
 import tbanco.model.IEntidavel;
+import tbanco.model.IRelacionavel;
 import tbanco.model.ModEntRel;
 import tbanco.model.relacionamento.AbstractRelacionamento;
 import tbanco.model.relacionamento.AbstractRelacionavel;
@@ -60,7 +60,7 @@ public class XMLReader {
 
                 importAgregacoes(doc.getElementsByTagName("agregacao"), modEntRel, jTextArea);
 
-                importRelacionamentos(modEntRel.getRelacionaveis(), eElement, jTextArea);
+                importRelacionamentos(modEntRel, eElement, jTextArea);
             }
 
         } catch (ParserConfigurationException | SAXException | IOException ex) {
@@ -135,7 +135,7 @@ public class XMLReader {
     }
 
     ///relacionavel somente para pesquisa
-    public static void importRelacionamentos(Iterator relacionaveis,
+    public static void importRelacionamentos(IRelacionavel relacionaveis,
             Element _eElement, JTextArea jTextArea) {
         NodeList relacionamentosNL = _eElement.getElementsByTagName("relacionamento");
         for (int temp = 0; temp < relacionamentosNL.getLength(); temp++) {
@@ -150,17 +150,17 @@ public class XMLReader {
                 System.out.println("Relacionamento nome: " + nome);
                 jTextArea.append("Relacionamento nome: " + nome + "\n");
 
-                NodeList cardinal = _eElement.getElementsByTagName("cardinalidade");
+                NodeList cardinal = eElement.getElementsByTagName("cardinalidade");
                 String cardinalidade = cardinal.item(0).getTextContent();
 
                 AbstractRelacionamento relacionamento = null;
 
-                NodeList relac = _eElement.getElementsByTagName("relacionavel");
+                NodeList relac = eElement.getElementsByTagName("relacionavel");
 
                 switch (relac.getLength()) {
                     case 1: {
                         System.out.println("RELACIONAMENTO UNARIO");
-                        NodeList papeis = _eElement.getElementsByTagName("papel");
+                        NodeList papeis = eElement.getElementsByTagName("papel");
                         String papelOr = null, papelDt = null;
                         if (papeis.getLength() > 0) {
                             papelOr = papeis.item(0).getTextContent();
@@ -205,11 +205,12 @@ public class XMLReader {
         }
     }
 
-    static AbstractRelacionavel pesquisaRelacionavel(Iterator relacionaveis, String nome) {
+    static AbstractRelacionavel pesquisaRelacionavel(IRelacionavel relacionavel, String nome) {
+        Iterator<AbstractRelacionavel> relacionaveis = relacionavel.getRelacionaveis();
         while (relacionaveis.hasNext()) {
-            AbstractRelacionavel relacionavel = (AbstractRelacionavel) relacionaveis.next();
-            if (relacionavel.getNome().equalsIgnoreCase(nome)) {
-                return relacionavel;
+            AbstractRelacionavel relac = relacionaveis.next();
+            if (relac.getNome().equalsIgnoreCase(nome)) {
+                return relac;
             }
         }
         System.err.println("ERRO: entidade não encontrada no grupo: " + nome);
@@ -230,7 +231,7 @@ public class XMLReader {
 
                 importEntidades(agregacao, eElement, jTextArea);
 
-                importRelacionamentos(agregacao.getEntidadesIterator(), eElement, jTextArea);
+                importRelacionamentos(agregacao, eElement, jTextArea);
 
                 importAtributos(agregacao, eElement, jTextArea);
             }

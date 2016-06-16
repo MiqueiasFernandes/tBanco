@@ -14,7 +14,7 @@ import java.util.Iterator;
  *
  * @author mfernandes
  */
-public class Agregacao extends AbstractRelacionavel implements IEntidavel {
+public class Agregacao extends AbstractRelacionavel implements IEntidavel, IRelacionavel {
 
     private String nome;
     private HashSet<Entidade> entidades;
@@ -105,6 +105,13 @@ public class Agregacao extends AbstractRelacionavel implements IEntidavel {
 
     public void addAllEntidades(HashSet<Entidade> array) {
         array.addAll(entidades);
+    }
+
+    @Override
+    public Iterator<AbstractRelacionavel> getRelacionaveis() {
+        HashSet<AbstractRelacionavel> relacionaveis = new HashSet<>();
+        relacionaveis.addAll(entidades);
+        return relacionaveis.iterator();
     }
 
 }
