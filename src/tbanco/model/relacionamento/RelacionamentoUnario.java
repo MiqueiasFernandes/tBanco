@@ -61,4 +61,30 @@ public class RelacionamentoUnario extends AbstractRelacionamento {
         return papelOrigem != null && papelDestino != null;
     }
 
+    @Override
+    public AbstractRelacionavel[] getRelacionaveisCardinalidadeN() {
+        switch (getCardinalidadeDeRelacionamento()) {
+            case UM_PRA_UM:
+                return null;
+
+            case UM_PRA_N:
+            case N_PRA_N:
+                return getRelacionaveis();
+        }
+        return null;
+    }
+
+    @Override
+    public AbstractRelacionavel[] getRelacionaveisCardinalidade1() {
+        switch (getCardinalidadeDeRelacionamento()) {
+            case UM_PRA_UM:
+                return getRelacionaveis();
+
+            case UM_PRA_N:
+            case N_PRA_N:
+                return null;
+        }
+        return null;
+    }
+
 }

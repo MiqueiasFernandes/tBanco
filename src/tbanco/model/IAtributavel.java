@@ -15,4 +15,6 @@ public interface IAtributavel {
 
     public Atributos getAtributos();
 
+    public boolean hasAtributos();
+
 }

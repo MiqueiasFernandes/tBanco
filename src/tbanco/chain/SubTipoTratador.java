@@ -66,14 +66,6 @@ public class SubTipoTratador extends AbstractTratador {
         return null;
     }
 
-    void addChavesPrimarias(IAtributavel origem, IAtributavel destino) {
-        Iterator<Atributo> atributos = origem.getAtributos().getAtributosIterator();
-        while (atributos.hasNext()) {
-            Atributo atributo = atributos.next();
-            if (atributo.isChave_primaria()) {
-                destino.getAtributos().addAtributo(atributo);
-            }
-        }
-    }
+   
 
 }

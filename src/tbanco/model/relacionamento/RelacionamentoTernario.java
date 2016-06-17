@@ -88,4 +88,80 @@ public class RelacionamentoTernario extends AbstractRelacionamento {
         return topo.equals(relacionavel);
     }
 
+    @Override
+    public AbstractRelacionavel[] getRelacionaveisCardinalidadeN() {
+        switch (getCardinalidadeDeRelacionamento()) {
+            case UM_PRA_UM:
+                return null;
+
+            case UM_PRA_UM_PRA_N: {
+                AbstractRelacionavel[] r = {
+                    (cardinalidade_topo == 'N') ? topo
+                    : (cardinalidade_esquerdo == 'N') ? esquerdo
+                    : (cardinalidade_direito == 'N') ? direito
+                    : null
+                };
+                return r;
+            }
+
+            case N_PRA_N_PRA_UM: {
+                AbstractRelacionavel p = (cardinalidade_topo == 'N') ? topo
+                        : (cardinalidade_esquerdo == 'N') ? esquerdo
+                                : (cardinalidade_direito == 'N') ? direito
+                                        : null;
+
+                AbstractRelacionavel s = (p != topo && cardinalidade_topo == 'N') ? topo
+                        : (p != esquerdo && cardinalidade_esquerdo == 'N') ? esquerdo
+                                : (p != direito && cardinalidade_direito == 'N') ? direito
+                                        : null;
+
+                AbstractRelacionavel[] r = {p, s};
+                return r;
+
+            }
+
+            case N_PRA_N:
+                return getRelacionaveis();
+        }
+        return null;
+    }
+
+    @Override
+    public AbstractRelacionavel[] getRelacionaveisCardinalidade1() {
+        switch (getCardinalidadeDeRelacionamento()) {
+            case N_PRA_N:
+                return null;
+
+            case N_PRA_N_PRA_UM: {
+                AbstractRelacionavel[] r = {
+                    (cardinalidade_topo == '1') ? topo
+                    : (cardinalidade_esquerdo == '1') ? esquerdo
+                    : (cardinalidade_direito == '1') ? direito
+                    : null
+                };
+                return r;
+            }
+
+            case UM_PRA_UM_PRA_N: {
+                AbstractRelacionavel p = (cardinalidade_topo == '1') ? topo
+                        : (cardinalidade_esquerdo == '1') ? esquerdo
+                                : (cardinalidade_direito == '1') ? direito
+                                        : null;
+
+                AbstractRelacionavel s = (p != topo && cardinalidade_topo == '1') ? topo
+                        : (p != esquerdo && cardinalidade_esquerdo == '1') ? esquerdo
+                                : (p != direito && cardinalidade_direito == '1') ? direito
+                                        : null;
+
+                AbstractRelacionavel[] r = {p, s};
+                return r;
+
+            }
+
+            case UM_PRA_UM:
+                return getRelacionaveis();
+        }
+        return null;
+    }
+
 }

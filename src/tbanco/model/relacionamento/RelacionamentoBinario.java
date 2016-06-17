@@ -16,7 +16,7 @@ public class RelacionamentoBinario extends AbstractRelacionamento {
 
     public RelacionamentoBinario(String nome_relacionamento, String cardinalidade,
             AbstractRelacionavel origem, AbstractRelacionavel destino) {
-        super(nome_relacionamento, cardinalidade.toUpperCase());
+        super(nome_relacionamento, cardinalidade = cardinalidade.toUpperCase());
         this.origem = origem;
         this.destino = destino;
         this.cardinalidade_origem = cardinalidade.split("-")[0].charAt(0);
@@ -55,6 +55,40 @@ public class RelacionamentoBinario extends AbstractRelacionamento {
     @Override
     public boolean isEntidadeOrigem(AbstractRelacionavel relacionavel) {
         return origem.equals(relacionavel);
+    }
+
+    @Override
+    public AbstractRelacionavel[] getRelacionaveisCardinalidadeN() {
+        switch (getCardinalidadeDeRelacionamento()) {
+            case UM_PRA_UM:
+                return null;
+
+            case UM_PRA_N: {
+                AbstractRelacionavel[] r = {cardinalidade_origem == 'N' ? origem : destino};
+                return r;
+            }
+
+            case N_PRA_N:
+                return getRelacionaveis();
+        }
+        return null;
+    }
+
+    @Override
+    public AbstractRelacionavel[] getRelacionaveisCardinalidade1() {
+        switch (getCardinalidadeDeRelacionamento()) {
+            case UM_PRA_UM:
+                return getRelacionaveis();
+
+            case UM_PRA_N: {
+                AbstractRelacionavel[] r = {cardinalidade_origem == '1' ? origem : destino};
+                return r;
+            }
+
+            case N_PRA_N:
+                return null;
+        }
+        return null;
     }
 
 }

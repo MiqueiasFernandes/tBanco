@@ -5,6 +5,9 @@
  */
 package tbanco.chain;
 
+import java.util.Iterator;
+import tbanco.model.Atributo;
+import tbanco.model.IAtributavel;
 import tbanco.model.ModEntRel;
 
 /**
@@ -29,6 +32,16 @@ public abstract class AbstractTratador {
         }
         if (proximo != null) {
             proximo.verificar(modEntRel);
+        }
+    }
+
+    void addChavesPrimarias(IAtributavel origem, IAtributavel destino) {
+        Iterator<Atributo> atributos = origem.getAtributos().getAtributosIterator();
+        while (atributos.hasNext()) {
+            Atributo atributo = atributos.next();
+            if (atributo.isChave_primaria()) {
+                destino.getAtributos().addAtributo(atributo);
+            }
         }
     }
 

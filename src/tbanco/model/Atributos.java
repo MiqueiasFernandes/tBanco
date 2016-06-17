@@ -28,4 +28,8 @@ public class Atributos {
         atributos.add(atributo);
     }
 
+    public int atributosCount() {
+        return atributos.size();
+    }
+
 }

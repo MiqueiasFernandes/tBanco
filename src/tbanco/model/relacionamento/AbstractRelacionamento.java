@@ -60,7 +60,16 @@ public abstract class AbstractRelacionamento implements IAtributavel {
         atributos.addAtributo(atributo);
     }
 
+    @Override
+    public boolean hasAtributos() {
+        return atributos.atributosCount() > 0;
+    }
+
     public abstract AbstractRelacionavel[] getRelacionaveis();
+
+    public abstract AbstractRelacionavel[] getRelacionaveisCardinalidadeN();
+
+    public abstract AbstractRelacionavel[] getRelacionaveisCardinalidade1();
 
     public abstract boolean isEntidadeOrigem(AbstractRelacionavel relacionavel);
 

@@ -51,6 +51,11 @@ public abstract class AbstractRelacionavel implements IAtributavel {
         return relacionamentos.size() > 0;
     }
 
+    @Override
+    public boolean hasAtributos() {
+        return atributos.atributosCount() > 0;
+    }
+
     public abstract boolean equals(AbstractRelacionavel other);
 
     public abstract boolean isEntidade();
