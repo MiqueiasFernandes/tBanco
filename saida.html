@@ -1,0 +1,15 @@
+<html><body>
+<br>
+cursoSuperior [ <u>*cursoSuperior_matricula_aluno</u>, <u>*cursoSuperior_cargo_funcionario_professor</u>, <u>*cursoSuperior_area_professor</u>, <u>*cursoSuperior_nome</u>, <u>*cursoSuperior_nome_departamento</u>, <u>*cursoSuperior_nome_pessoa_aluno</u> ]<br>
+pessoa [ <u>*nome_casamento_pessoa</u>, tipo_aluno, sexo, <u>*nome</u>, tipo_funcionario, <u>endereco</u>, <u>telefone</u> ]<br>
+professor [ <u>*area</u>, <u>horario</u>, <u>*cargo_funcionario</u> ]<br>
+orienta-tcc [ <u>nome_pessoa</u>, <u>matricula</u>, orienta-tcc_dataDefesa ]<br>
+aluno [ <u>*nome_pessoa</u>, <u>turma</u>, turno, <u>*matricula</u> ]<br>
+disciplina [ <u>#*area_leciona_professor</u>, <u>nome</u>, leciona_horario, <u>*codigo</u>, carga horaria, <u>#*cargo_funcionario_leciona_professor</u> ]<br>
+universidade [ site, <u>*nome</u>, <u>endereco</u> ]<br>
+turma [ turma_siteDaDisciplina, <u>*turma_matricula_aluno</u>, <u>*turma_codigo_disciplina</u>, <u>*turma_nome_pessoa_aluno</u> ]<br>
+departamento [ <u>*cargo_gerencia_funcionario</u>, <u>*nome</u>, <u>*nome_pessoa_gerencia_funcionario</u>, sala, <u>*cargo_supervisao_funcionario_gerencia_funcionario</u>, <u>departamento</u>, <u>*nome_pessoa_supervisao_funcionario_gerencia_funcionario</u> ]<br>
+aula [ <u>*matricula_aluno</u>, <u>#*cargo_funcionario_leciona_professor_disciplina</u>, <u>#*area_leciona_professor_disciplina</u>, <u>*codigo_disciplina</u>, aula_sala, <u>*area_professor</u>, <u>*nome_pessoa_aluno</u>, <u>*cargo_funcionario_professor</u> ]<br>
+pre-requisito [ <u>*pre-requisito_codigo_disciplina</u> ]<br>
+grandeArea [ <u>*cargo_funcionario_professor</u>, <u>*grandeArea_nome</u>, <u>*area_professor</u>, sala_departamento, <u>nome_departamento</u>, <u>*codigo_disciplina</u>, <u>departamento_departamento</u> ]<br>
+funcionario [ <u>*cargo</u>, <u>nomeDepartamento</u>, <u>*nome_pessoa_supervisao_funcionario</u>, <u>*nome_gerencia_departamento</u>, salario, tipo_professor, <u>*nome_pessoa</u>, <u>*cargo_supervisao_funcionario</u> ]</body></html>

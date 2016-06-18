@@ -19,7 +19,7 @@ public class NpNpUmTratador extends AbstractTratador {
         while (relacionamentos.hasNext()) {
             AbstractRelacionamento relacionamento = relacionamentos.next();
             if (relacionamento.getCardinalidadeDeRelacionamento()
-                    == AbstractRelacionamento.CARDINALIDADE_DE_RELACIONAMENTO.UM_PRA_UM_PRA_N) {
+                    == AbstractRelacionamento.CARDINALIDADE_DE_RELACIONAMENTO.N_PRA_N_PRA_UM) {
                 return true;
             }
         }
@@ -32,14 +32,14 @@ public class NpNpUmTratador extends AbstractTratador {
         while (relacionamentos.hasNext()) {
             AbstractRelacionamento relacionamento = relacionamentos.next();
             if (relacionamento.getCardinalidadeDeRelacionamento()
-                    == AbstractRelacionamento.CARDINALIDADE_DE_RELACIONAMENTO.UM_PRA_UM_PRA_N) {
+                    == AbstractRelacionamento.CARDINALIDADE_DE_RELACIONAMENTO.N_PRA_N_PRA_UM) {
 //x = 1; y = m; z = n
 //ABC (chaves-A, *chaves-B, *chaves-C)
 
                 Entidade entidade = new Entidade(relacionamento.getNome());
 
                 addChavesPrimarias(relacionamento.getRelacionaveisCardinalidadeN()[0], entidade, true, null);
-                addChavesPrimarias(relacionamento.getRelacionaveisCardinalidadeN()[2], entidade, true, null);
+                addChavesPrimarias(relacionamento.getRelacionaveisCardinalidadeN()[1], entidade, true, null);
 
                 Iterator<Atributo> atributosIterator
                         = relacionamento.getRelacionaveisCardinalidade1()[0].getAtributos().getAtributosIterator();

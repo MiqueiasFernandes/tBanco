@@ -1,0 +1,15 @@
+
+
+funcionario [ salario, ÑN*cargo_supervisao_funcionario, ÑN*nome_gerencia_departamento, ÑN*cargo, tipo_professor, ÑN*nome_pessoa_supervisao_funcionario, ÑN*nome_pessoa, ÑNnomeDepartamento ]
+aula [ ÑN*cargo_funcionario_professor, ÑN#*cargo_funcionario_leciona_professor_disciplina, aula_sala, ÑN*nome_pessoa_funcionario_professor, ÑN*nome_pessoa_aluno, ÑN#*nome_pessoa_funcionario_leciona_professor_disciplina, ÑN*matricula_aluno, ÑN*codigo_disciplina, ÑN*area_professor, ÑN#*area_leciona_professor_disciplina ]
+departamento [ sala, ÑN*nome, ÑNdepartamento, ÑN*nome_pessoa_gerencia_funcionario, ÑN*cargo_supervisao_funcionario_gerencia_funcionario, ÑN*cargo_gerencia_funcionario, ÑN*nome_pessoa_supervisao_funcionario_gerencia_funcionario ]
+universidade [ ÑN*nome, ÑNendereco, site ]
+pessoa [ tipo_aluno, ÑNendereco, ÑNtelefone, sexo, ÑN*nome_casamento_pessoa, ÑN*nome, tipo_funcionario ]
+grandeArea [ ÑNnome_departamento, ÑNdepartamento_departamento, ÑN*grandeArea_nome, ÑN*nome_pessoa_funcionario_professor, ÑN*cargo_funcionario_professor, sala_departamento, ÑN*area_professor, ÑN*codigo_disciplina ]
+aluno [ ÑN*matricula, turno, ÑN*nome_pessoa, ÑNturma ]
+cursoSuperior [ ÑN*cursoSuperior_area_professor, ÑN*cursoSuperior_nome_departamento, ÑN*cursoSuperior_nome, ÑN*cursoSuperior_cargo_funcionario_professor, ÑN*cursoSuperior_nome_pessoa_aluno, ÑN*cursoSuperior_nome_pessoa_funcionario_professor, ÑN*cursoSuperior_matricula_aluno ]
+turma [ ÑN*turma_matricula_aluno, ÑN*turma_nome_pessoa_aluno, ÑN*turma_codigo_disciplina, turma_siteDaDisciplina ]
+disciplina [ ÑN*codigo, ÑN#*nome_pessoa_funcionario_leciona_professor, carga horaria, ÑN#*area_leciona_professor, ÑN#*cargo_funcionario_leciona_professor, ÑNnome, leciona_horario ]
+pre-requisito [ ÑN*pre-requisito_codigo_disciplina ]
+orienta-tcc [ ÑNnome_pessoa, ÑNmatricula, orienta-tcc_dataDefesa ]
+professor [ ÑNhorario, ÑN*nome_pessoa_funcionario, ÑN*area, ÑN*cargo_funcionario ]

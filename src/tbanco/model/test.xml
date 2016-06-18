@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modelorelacionaldeteste>
+  <root>
+    <!--DECLARACAO DE TODAS ENTIDADES-->
+    <entidade nome="pessoa">
+      <atributo restricao="n*">nome</atributo>
+      <atributo restricao="n">endereco</atributo>
+      <atributo restricao="nkf">telefone</atributo>
+      <atributo>sexo</atributo>
+    </entidade>
+
+    <entidade nome="funcionario" tipo="pessoa">
+      <atributo restricao="n*">cargo</atributo>
+      <atributo restricao="nf">nomeDepartamento</atributo>
+      <atributo>salario</atributo>
+    </entidade>
+
+    <entidade nome="professor" tipo="funcionario">
+      <atributo restricao="n*">area</atributo>
+      <atributo restricao="n">horario</atributo>
+    </entidade>
+
+    <entidade nome="aluno" tipo="pessoa">
+      <atributo restricao="n*">matricula</atributo>
+      <atributo restricao="n">turma</atributo>
+      <atributo>turno</atributo>
+    </entidade>
+
+    <entidade nome="disciplina">
+      <atributo restricao="n*">codigo</atributo>
+      <atributo restricao="n">nome</atributo>
+      <atributo>carga horaria</atributo>
+    </entidade>
+
+    <entidade nome="departamento">
+      <atributo restricao="n*">nome</atributo>
+      <atributo restricao="n">departamento</atributo>
+      <atributo>sala</atributo>
+    </entidade>
+
+    <entidade nome="universidade">
+      <atributo restricao="n*">nome</atributo>
+      <atributo restricao="n">endereco</atributo>
+      <atributo>site</atributo>
+    </entidade>
+
+    <!--DECLARACAO DE TODOS RELACIONAMENTOS-->
+    <relacionamento nome="casamento">
+      <papel>marido</papel>
+      <papel>mulher</papel>
+      <relacionavel>pessoa</relacionavel>
+      <cardinalidade>1-1</cardinalidade>
+    </relacionamento>
+
+    <relacionamento nome="supervisao">
+      <papel>supervisor</papel>
+      <papel>supervisionado</papel>
+      <relacionavel>funcionario</relacionavel>
+      <cardinalidade>1-N</cardinalidade>
+    </relacionamento>
+
+    <relacionamento nome="pre-requisito">
+      <papel>tem-como-pre-requisito</papel>
+      <papel>eh-pre-requisito</papel>
+      <relacionavel>disciplina</relacionavel>
+      <cardinalidade>N-N</cardinalidade>
+    </relacionamento>
+
+    <relacionamento nome="gerencia">
+      <relacionavel>funcionario</relacionavel>
+      <relacionavel>departamento</relacionavel>
+      <cardinalidade>1-1</cardinalidade>
+    </relacionamento>
+
+    <relacionamento nome="leciona">
+      <relacionavel>professor</relacionavel>
+      <relacionavel>disciplina</relacionavel>
+      <cardinalidade>1-N</cardinalidade>
+      <atributo>horario</atributo>
+    </relacionamento>
+
+    <relacionamento nome="turma">
+      <relacionavel>aluno</relacionavel>
+      <relacionavel>disciplina</relacionavel>
+      <cardinalidade>N-N</cardinalidade>
+      <atributo>siteDaDisciplina</atributo>
+    </relacionamento>
+
+    <relacionamento nome="orienta-tcc">
+      <relacionavel>disciplina</relacionavel>
+      <relacionavel>professor</relacionavel>
+      <relacionavel>aluno</relacionavel>
+      <cardinalidade>1-1-1</cardinalidade>
+      <atributo>dataDefesa</atributo>
+    </relacionamento>
+
+    <relacionamento nome="aula">
+      <relacionavel>disciplina</relacionavel>
+      <relacionavel>professor</relacionavel>
+      <relacionavel>aluno</relacionavel>
+      <cardinalidade>1-1-N</cardinalidade>
+      <atributo>sala</atributo>
+    </relacionamento>
+
+    <relacionamento nome="grandeArea">
+      <atributo restricao="n*">nome</atributo>
+      <relacionavel>departamento</relacionavel>
+      <relacionavel>disciplina</relacionavel>
+      <relacionavel>professor</relacionavel>
+      <cardinalidade>1-N-N</cardinalidade>
+    </relacionamento>
+
+    <relacionamento nome="cursoSuperior">
+      <atributo restricao="n*">nome</atributo>
+      <relacionavel>aluno</relacionavel>
+      <relacionavel>departamento</relacionavel>
+      <relacionavel>professor</relacionavel>
+      <cardinalidade>N-N-N</cardinalidade>
+    </relacionamento>
+  </root>
+</modelorelacionaldeteste>

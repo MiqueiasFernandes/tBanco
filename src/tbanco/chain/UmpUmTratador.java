@@ -46,10 +46,7 @@ public class UmpUmTratador extends AbstractTratador {
                             ///pessoa (código_pessoa, nome_pessoa, casamento_pessoa)
                             nomeatrib += relacionaveis[0].getNome();
 
-                            Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
-
-                            while (it.hasNext()) {
-                                Atributo atributo = it.next();
+                            for (Atributo atributo : relacionaveis[0].getAtributosArray()) {
                                 if (atributo.isChave_primaria()) {
                                     relacionaveis[0].addAtributoSimples(
                                             new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
@@ -62,10 +59,7 @@ public class UmpUmTratador extends AbstractTratador {
                         case 2: {
                             nomeatrib += relacionaveis[0].getNome();
 
-                            Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
-
-                            while (it.hasNext()) {
-                                Atributo atributo = it.next();
+                            for (Atributo atributo : relacionaveis[0].getAtributosArray()) {
                                 if (atributo.isChave_primaria()) {
                                     relacionaveis[1].addAtributoSimples(
                                             new Atributo(atributo.getNome() + nomeatrib, atributo.getSource() + "%", atributo.getTipo()));
@@ -73,10 +67,8 @@ public class UmpUmTratador extends AbstractTratador {
                             }
                             nomeatrib = "_" + relacionamento.getNome() + "_" + relacionaveis[1].getNome();
 
-                            it = relacionaveis[1].getAtributos().getAtributosIterator();
+                            for (Atributo atributo : relacionaveis[1].getAtributosArray()) {
 
-                            while (it.hasNext()) {
-                                Atributo atributo = it.next();
                                 if (atributo.isChave_primaria() && !atributo.getSource().contains("%")) {
                                     relacionaveis[0].addAtributoSimples(
                                             new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
@@ -96,10 +88,7 @@ public class UmpUmTratador extends AbstractTratador {
 
                             AbstractRelacionavel relacionavel = relacionaveis[2];
 
-                            Iterator<Atributo> it = relacionavel.getAtributos().getAtributosIterator();
-
-                            while (it.hasNext()) {
-                                Atributo atributo = it.next();
+                            for (Atributo atributo : relacionavel.getAtributosArray()) {
                                 if (atributo.isChave_primaria() && !atributo.getSource().contains("%")) {
                                     entidade.addAtributoSimples(
                                             new Atributo(atributo.getNome(), atributo.getSource().replace("*", ""), atributo.getTipo()));
@@ -107,10 +96,7 @@ public class UmpUmTratador extends AbstractTratador {
                             }
 
                             if (relacionamento.hasAtributos()) {
-                                Iterator<Atributo> atributosIterator = relacionamento.getAtributos().getAtributosIterator();
-
-                                while (atributosIterator.hasNext()) {
-                                    Atributo atributo = atributosIterator.next();
+                                for (Atributo atributo : relacionamento.getAtributosArray()) {
                                     entidade.addAtributoAlterado(atributo, relacionamento.getNome(), null, atributo.isChave_primaria());
                                 }
                             }
@@ -121,10 +107,7 @@ public class UmpUmTratador extends AbstractTratador {
 
                     if (relacionamento.hasAtributos() && relacionaveis.length < 3) {
 
-                        Iterator<Atributo> atributosIterator = relacionamento.getAtributos().getAtributosIterator();
-
-                        while (atributosIterator.hasNext()) {
-                            Atributo atributo = atributosIterator.next();
+                        for (Atributo atributo : relacionamento.getAtributosArray()) {
                             relacionaveis[0].addAtributoAlterado(atributo, relacionamento.getNome(), null, atributo.isChave_primaria());
                         }
 

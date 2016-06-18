@@ -23,6 +23,7 @@ public class MERProcessor {
         addTratador(new UmpNTratador());
         addTratador(new UmpUmTratador());
         addTratador(new UmpUmpNTratador());
+        addTratador(new TabelaTratador());
     }
 
     public void addTratador(AbstractTratador tratador) {

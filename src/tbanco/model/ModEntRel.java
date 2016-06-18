@@ -105,4 +105,8 @@ public class ModEntRel implements IEntidavel, IRelacionavel {
         return tabelas.iterator();
     }
 
+    public boolean tabelaContain(Entidade entidade) {
+        return tabelas.contains(entidade);
+    }
+
 }
