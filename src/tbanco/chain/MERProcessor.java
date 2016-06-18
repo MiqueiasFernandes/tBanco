@@ -16,10 +16,13 @@ public class MERProcessor {
     AbstractTratador primeiro;
 
     public MERProcessor() {
-
         addTratador(new SubTipoTratador());
         addTratador(new EntForteTratador());
-
+        addTratador(new NpNTratador());
+        addTratador(new NpNpUmTratador());
+        addTratador(new UmpNTratador());
+        addTratador(new UmpUmTratador());
+        addTratador(new UmpUmpNTratador());
     }
 
     public void addTratador(AbstractTratador tratador) {

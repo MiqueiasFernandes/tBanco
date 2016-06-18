@@ -57,6 +57,11 @@ public abstract class AbstractRelacionamento implements IAtributavel {
     }
 
     @Override
+    public Atributo[] getAtributosArray() {
+        return atributos.getAtributosArray();
+    }
+
+    @Override
     public void addAtributoSimples(Atributo atributo) {
         atributos.addAtributoSimples(atributo);
     }

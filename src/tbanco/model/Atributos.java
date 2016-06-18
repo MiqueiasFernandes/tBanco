@@ -54,4 +54,7 @@ public class Atributos {
         return atributos.size();
     }
 
+    public Atributo[] getAtributosArray() {
+        return atributos.toArray(new Atributo[atributos.size()]);
+    }
 }

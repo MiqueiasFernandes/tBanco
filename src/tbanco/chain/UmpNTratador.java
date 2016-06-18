@@ -44,10 +44,7 @@ public class UmpNTratador extends AbstractTratador {
                     case 1: {
                         nomeatrib += relacionaveis[0].getNome();
 
-                        Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
-
-                        while (it.hasNext()) {
-                            Atributo atributo = it.next();
+                        for (Atributo atributo : relacionaveis[0].getAtributosArray()) {
                             if (atributo.isChave_primaria()) {
                                 relacionaveis[0].addAtributoSimples(
                                         new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));

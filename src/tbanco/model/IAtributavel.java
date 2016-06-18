@@ -21,4 +21,6 @@ public interface IAtributavel {
 
     public String getNome();
 
+    public Atributo[] getAtributosArray();
+
 }

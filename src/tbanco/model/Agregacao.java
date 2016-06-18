@@ -18,6 +18,7 @@ public class Agregacao extends AbstractRelacionavel implements IEntidavel, IRela
 
     private String nome;
     private HashSet<Entidade> entidades;
+    private Entidade entidadePrincipal;
 
     public Agregacao(String nome) {
         this.nome = nome;
@@ -112,6 +113,10 @@ public class Agregacao extends AbstractRelacionavel implements IEntidavel, IRela
         HashSet<AbstractRelacionavel> relacionaveis = new HashSet<>();
         relacionaveis.addAll(entidades);
         return relacionaveis.iterator();
+    }
+
+    public Entidade getEntidadePrincipal() {
+        return entidadePrincipal;
     }
 
 }
