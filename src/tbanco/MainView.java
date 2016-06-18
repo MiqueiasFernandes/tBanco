@@ -5,6 +5,9 @@
  */
 package tbanco;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -46,6 +49,8 @@ public class MainView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -80,11 +85,20 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Exportar");
+        jButton2.setAutoscrolls(true);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         jLabel1.setBackground(new java.awt.Color(254, 254, 254));
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("...");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel1.setOpaque(true);
+        jScrollPane2.setViewportView(jLabel1);
 
         jMenu1.setText("Arquivo");
 
@@ -110,31 +124,30 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addContainerGap())
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(103, 103, 103))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(109, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3)
                 .addContainerGap())
@@ -228,63 +241,107 @@ public class MainView extends javax.swing.JFrame {
 
         if (modeloEntidadeRelacionamento != null) {
             processor.tratar(modeloEntidadeRelacionamento);
-        }
 
-        Iterator<Entidade> entidades = modeloEntidadeRelacionamento.getTabelaIterator();
+            Iterator<Entidade> entidades = modeloEntidadeRelacionamento.getTabelaIterator();
 
-        String modelo = "<html><body>\n";
+            String modelo = "<html><body>\n";
 
-        while (entidades.hasNext()) {
-            Entidade tabela = entidades.next();
-            String tbl = "<br>\n" + tabela.getNome() + " [ ";
+            while (entidades.hasNext()) {
+                Entidade tabela = entidades.next();
+                String tbl = "<br>\n" + tabela.getNome() + " [ ";
 
-            Iterator<Atributo> atributos = tabela.getAtributos().getAtributosIterator();
+                Iterator<Atributo> atributos = tabela.getAtributos().getAtributosIterator();
 
-            while (atributos.hasNext()) {
-                Atributo atributo = atributos.next();
-                if (atributo.isNao_nulo()) {
-                    tbl += "<u>";
+                while (atributos.hasNext()) {
+                    Atributo atributo = atributos.next();
+                    if (atributo.isNao_nulo()) {
+                        tbl += "<u>";
+                    }
+
+                    if (atributo.isChave_estrangeira()) {
+                        tbl += "#";
+                    }
+
+                    if (atributo.isChave_primaria()) {
+                        tbl += "*";
+                    }
+
+                    tbl += atributo.getNome();
+
+                    if (atributo.isNao_nulo()) {
+                        tbl += "</u>";
+                    }
+
+                    if (atributos.hasNext()) {
+                        tbl += ", ";
+                    }
+
                 }
-
-                if (atributo.isChave_estrangeira()) {
-                    tbl += "#";
-                }
-
-                if (atributo.isChave_primaria()) {
-                    tbl += "*";
-                }
-
-                tbl += atributo.getNome();
-
-                if (atributo.isNao_nulo()) {
-                    tbl += "</u>";
-                }
-
-                if (atributos.hasNext()) {
-                    tbl += ", ";
-                }
-
+                tbl += " ]";
+                modelo += tbl;
             }
-            tbl += " ]";
-            modelo += tbl;
-        }
-        modelo += "</body></html>";
+            modelo += "</body></html>";
 
-        jLabel1.setText(modelo);
-        jLabel1.repaint();
-        System.out.println(modelo);
+            jLabel1.setText(modelo);
+            jLabel1.repaint();
+            System.out.println(modelo);
+        } else {
+            JOptionPane.showMessageDialog(this, "importe primeiro");
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        if (!jLabel1.getText().equals("...")) {
+            JFileChooser jf = new JFileChooser("./");
+            jf.showSaveDialog(this);
+
+            File arq = jf.getSelectedFile().getAbsoluteFile();
+            try {
+                arq.createNewFile();
+
+                FileWriter fw = new FileWriter(arq);
+
+                if (arq.getName().contains(".html")) {
+                    fw.write(jLabel1.getText());
+                } else {
+
+                    String str = jLabel1.getText();
+                    str = str.replace("<html>", "");
+                    str = str.replace("</html>", "");
+                    str = str.replace("<body>", "");
+                    str = str.replace("</body>", "");
+                    str = str.replace("<br>", "");
+                    str = str.replace("</u>", "");
+                    str = str.replace("<u>", "ÑN");
+                    fw.write(str);
+                }
+
+                fw.flush();
+                fw.close();
+                JOptionPane.showMessageDialog(this, "Arquivo salvo com sucesso");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "mapeie primeiro");
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTree jTree1;
