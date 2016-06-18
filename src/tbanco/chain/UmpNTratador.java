@@ -7,7 +7,6 @@ package tbanco.chain;
 
 import java.util.Iterator;
 import tbanco.model.Atributo;
-import tbanco.model.Entidade;
 import tbanco.model.ModEntRel;
 import tbanco.model.relacionamento.AbstractRelacionamento;
 import tbanco.model.relacionamento.AbstractRelacionavel;
@@ -37,7 +36,7 @@ public class UmpNTratador extends AbstractTratador {
                     == AbstractRelacionamento.CARDINALIDADE_DE_RELACIONAMENTO.UM_PRA_N) {
 
                 AbstractRelacionavel[] relacionaveis = relacionamento.getRelacionaveis();
-                String nomeatrib = "_" + relacionamento.getNome_relacionamento() + "_";
+                String nomeatrib = "_" + relacionamento.getNome() + "_";
                 AbstractRelacionavel relN = relacionamento.getRelacionaveisCardinalidadeN()[0];
 
                 switch (relacionaveis.length) {
@@ -50,7 +49,7 @@ public class UmpNTratador extends AbstractTratador {
                         while (it.hasNext()) {
                             Atributo atributo = it.next();
                             if (atributo.isChave_primaria()) {
-                                relacionaveis[0].addAtributo(
+                                relacionaveis[0].addAtributoSimples(
                                         new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
                             }
                         }
@@ -69,7 +68,7 @@ public class UmpNTratador extends AbstractTratador {
                         while (it.hasNext()) {
                             Atributo atributo = it.next();
                             if (atributo.isChave_primaria()) {
-                                relN.addAtributo(
+                                relN.addAtributoSimples(
                                         new Atributo(atributo.getNome() + nomeatrib, atributo.getSource() + "#%", atributo.getTipo()));
                             }
                         }
@@ -77,15 +76,13 @@ public class UmpNTratador extends AbstractTratador {
                     break;
                 }
 
-                Iterator<Atributo> atributosIterator
-                        = relacionamento.getAtributos().getAtributosIterator();
-
                 if (relacionamento.hasAtributos()) {
+                    Iterator<Atributo> atributosIterator
+                            = relacionamento.getAtributos().getAtributosIterator();
                     while (atributosIterator.hasNext()) {
                         Atributo atributo = atributosIterator.next();
 ///nao clona
-                        relN.addAtributo(atributo);
-
+                        relN.addAtributoAlterado(atributo, relacionamento.getNome(), null, atributo.isChave_primaria());
                     }
                 }
             }

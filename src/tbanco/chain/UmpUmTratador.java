@@ -34,89 +34,104 @@ public class UmpUmTratador extends AbstractTratador {
             AbstractRelacionamento relacionamento = relacionamentos.next();
             if (relacionamento.getCardinalidadeDeRelacionamento() == AbstractRelacionamento.CARDINALIDADE_DE_RELACIONAMENTO.UM_PRA_UM) {
 
-                String nomeatrib = "_" + relacionamento.getNome_relacionamento() + "_";
+                String nomeatrib = "_" + relacionamento.getNome() + "_";
 
                 ///caso 
                 AbstractRelacionavel[] relacionaveis = relacionamento.getRelacionaveis();
-                switch (relacionaveis.length) {
-                    ////unario
-                    case 1: {
-                        ///pessoa (código_pessoa, nome_pessoa, casamento_pessoa)
-                        nomeatrib += relacionaveis[0].getNome();
 
-                        Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
+                if (relacionaveis != null && relacionaveis.length > 0) {
+                    switch (relacionaveis.length) {
+                        ////unario
+                        case 1: {
+                            ///pessoa (código_pessoa, nome_pessoa, casamento_pessoa)
+                            nomeatrib += relacionaveis[0].getNome();
 
-                        while (it.hasNext()) {
-                            Atributo atributo = it.next();
-                            if (atributo.isChave_primaria()) {
-                                relacionaveis[0].addAtributo(
-                                        new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
-                            }
-                        }
+                            Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
 
-                    }
-                    break;
-                    ///binario
-                    case 2: {
-                        nomeatrib += relacionaveis[0].getNome();
-
-                        Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
-
-                        while (it.hasNext()) {
-                            Atributo atributo = it.next();
-                            if (atributo.isChave_primaria()) {
-                                relacionaveis[1].addAtributo(
-                                        new Atributo(atributo.getNome() + nomeatrib, atributo.getSource() + "%", atributo.getTipo()));
-                            }
-                        }
-                        nomeatrib = "_" + relacionamento.getNome_relacionamento() + "_" + relacionaveis[1].getNome();
-
-                        it = relacionaveis[1].getAtributos().getAtributosIterator();
-
-                        while (it.hasNext()) {
-                            Atributo atributo = it.next();
-                            if (atributo.isChave_primaria() && !atributo.getSource().contains("%")) {
-                                relacionaveis[0].addAtributo(
-                                        new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
-                            }
-                        }
-                    }
-                    break;
-                    ///ternario
-                    case 3: {
-
-                        for (AbstractRelacionavel relacionavel : relacionamento.getRelacionaveis()) {
-                            for (AbstractRelacionavel relacionavei : relacionamento.getRelacionaveis()) {
-
-                                nomeatrib = "_" + relacionamento.getNome_relacionamento() + "_" + relacionavel.getNome();
-
-                                Iterator<Atributo> it = relacionavel.getAtributos().getAtributosIterator();
-
-                                while (it.hasNext()) {
-                                    Atributo atributo = it.next();
-                                    if (atributo.isChave_primaria() && !atributo.getSource().contains("%")) {
-                                        relacionavei.addAtributo(
-                                                new Atributo(atributo.getNome() + nomeatrib, atributo.getSource() + "%", atributo.getTipo()));
-                                    }
+                            while (it.hasNext()) {
+                                Atributo atributo = it.next();
+                                if (atributo.isChave_primaria()) {
+                                    relacionaveis[0].addAtributoSimples(
+                                            new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
                                 }
+                            }
 
+                        }
+                        break;
+                        ///binario
+                        case 2: {
+                            nomeatrib += relacionaveis[0].getNome();
+
+                            Iterator<Atributo> it = relacionaveis[0].getAtributos().getAtributosIterator();
+
+                            while (it.hasNext()) {
+                                Atributo atributo = it.next();
+                                if (atributo.isChave_primaria()) {
+                                    relacionaveis[1].addAtributoSimples(
+                                            new Atributo(atributo.getNome() + nomeatrib, atributo.getSource() + "%", atributo.getTipo()));
+                                }
+                            }
+                            nomeatrib = "_" + relacionamento.getNome() + "_" + relacionaveis[1].getNome();
+
+                            it = relacionaveis[1].getAtributos().getAtributosIterator();
+
+                            while (it.hasNext()) {
+                                Atributo atributo = it.next();
+                                if (atributo.isChave_primaria() && !atributo.getSource().contains("%")) {
+                                    relacionaveis[0].addAtributoSimples(
+                                            new Atributo(atributo.getNome() + nomeatrib, atributo.getSource(), atributo.getTipo()));
+                                }
                             }
                         }
+                        break;
+                        ///ternario
+                        case 3: {
+
+                            ////cria uma nova tabela
+                            ////chave A e B + atributos chaves de C
+                            Entidade entidade = new Entidade(relacionamento.getNome());
+
+                            addChavesPrimarias(entidade, relacionaveis[0], true, relacionamento.getNome());
+                            addChavesPrimarias(entidade, relacionaveis[1], true, relacionamento.getNome());
+
+                            AbstractRelacionavel relacionavel = relacionaveis[2];
+
+                            Iterator<Atributo> it = relacionavel.getAtributos().getAtributosIterator();
+
+                            while (it.hasNext()) {
+                                Atributo atributo = it.next();
+                                if (atributo.isChave_primaria() && !atributo.getSource().contains("%")) {
+                                    entidade.addAtributoSimples(
+                                            new Atributo(atributo.getNome(), atributo.getSource().replace("*", ""), atributo.getTipo()));
+                                }
+                            }
+
+                            if (relacionamento.hasAtributos()) {
+                                Iterator<Atributo> atributosIterator = relacionamento.getAtributos().getAtributosIterator();
+
+                                while (atributosIterator.hasNext()) {
+                                    Atributo atributo = atributosIterator.next();
+                                    entidade.addAtributoAlterado(atributo, relacionamento.getNome(), null, atributo.isChave_primaria());
+                                }
+                            }
+                            modEntRel.addTabela(entidade);
+                        }
+                        break;
                     }
-                    break;
-                }
 
-                if (relacionamento.hasAtributos()) {
+                    if (relacionamento.hasAtributos() && relacionaveis.length < 3) {
 
-                    Iterator<Atributo> atributosIterator = relacionamento.getAtributos().getAtributosIterator();
+                        Iterator<Atributo> atributosIterator = relacionamento.getAtributos().getAtributosIterator();
 
-                    while (atributosIterator.hasNext()) {
-                        Atributo atributo = atributosIterator.next();
-                        relacionaveis[0].addAtributo(atributo);
+                        while (atributosIterator.hasNext()) {
+                            Atributo atributo = atributosIterator.next();
+                            relacionaveis[0].addAtributoAlterado(atributo, relacionamento.getNome(), null, atributo.isChave_primaria());
+                        }
+
                     }
-
+                } else {
+                    System.err.println("há um erro com o relacionamento " + relacionamento.getNome());
                 }
-
             }
         }
     }

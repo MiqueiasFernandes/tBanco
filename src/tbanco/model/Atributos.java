@@ -24,8 +24,30 @@ public class Atributos {
         return atributos.iterator();
     }
 
-    public void addAtributo(Atributo atributo) {
+    public void addAtributoSimples(Atributo atributo) {
         atributos.add(atributo);
+    }
+
+    public void addAtributoAlterado(Atributo atributo, String prefixo, String sufixo, boolean isKey) {
+        String nome = atributo.getNome();
+
+        if (prefixo != null && !prefixo.isEmpty()) {
+            nome = prefixo + "_" + nome;
+        }
+        if (sufixo != null && !sufixo.isEmpty()) {
+            nome += "_" + sufixo;
+        }
+        String source = "";
+        if (isKey) {
+            source += "*";
+        }
+        if (atributo.isChave_estrangeira()) {
+            source += "#";
+        }
+        if (atributo.isNao_nulo()) {
+            source += "N";
+        }
+        addAtributoSimples(new Atributo(nome, source));
     }
 
     public int atributosCount() {

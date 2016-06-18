@@ -8,7 +8,6 @@ package tbanco.chain;
 import java.util.Iterator;
 import tbanco.model.Atributo;
 import tbanco.model.Entidade;
-import tbanco.model.IAtributavel;
 import tbanco.model.ModEntRel;
 
 public class SubTipoTratador extends AbstractTratador {
@@ -45,8 +44,8 @@ public class SubTipoTratador extends AbstractTratador {
             if (subtipo.isSubtipo()) {
                 {
                     Entidade supertipo = getSuperTipo(subtipo.getTipo(), modEntRel.getTodasEntidades());
-                    supertipo.getAtributos().addAtributo(new Atributo("tipo_" + subtipo.getNome()));
-                    addChavesPrimarias(supertipo, subtipo);
+                    supertipo.getAtributos().addAtributoSimples(new Atributo("tipo_" + subtipo.getNome()));
+                    addChavesPrimarias(supertipo, subtipo, true, null);
                 }
             }
         }

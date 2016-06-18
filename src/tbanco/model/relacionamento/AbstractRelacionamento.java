@@ -46,7 +46,8 @@ public abstract class AbstractRelacionamento implements IAtributavel {
         return cardinalidade;
     }
 
-    public String getNome_relacionamento() {
+    @Override
+    public String getNome() {
         return nome_relacionamento;
     }
 
@@ -56,8 +57,13 @@ public abstract class AbstractRelacionamento implements IAtributavel {
     }
 
     @Override
-    public void addAtributo(Atributo atributo) {
-        atributos.addAtributo(atributo);
+    public void addAtributoSimples(Atributo atributo) {
+        atributos.addAtributoSimples(atributo);
+    }
+
+    @Override
+    public void addAtributoAlterado(Atributo atributo, String prefixo, String sufixo, boolean isKey) {
+        atributos.addAtributoAlterado(atributo, prefixo, sufixo, isKey);
     }
 
     @Override

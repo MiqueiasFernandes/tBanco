@@ -35,12 +35,16 @@ public abstract class AbstractTratador {
         }
     }
 
-    void addChavesPrimarias(IAtributavel origem, IAtributavel destino) {
+    void addChavesPrimarias(IAtributavel origem, IAtributavel destino, boolean renomear, String nomeRelac) {
         Iterator<Atributo> atributos = origem.getAtributos().getAtributosIterator();
         while (atributos.hasNext()) {
             Atributo atributo = atributos.next();
             if (atributo.isChave_primaria()) {
-                destino.getAtributos().addAtributo(atributo);
+                if (renomear) {
+                    destino.getAtributos().addAtributoAlterado(atributo, nomeRelac, origem.getNome(), true);
+                } else {
+                    destino.getAtributos().addAtributoSimples(atributo);
+                }
             }
         }
     }

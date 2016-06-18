@@ -11,10 +11,14 @@ package tbanco.model;
  */
 public interface IAtributavel {
 
-    public void addAtributo(Atributo atributo);
+    public void addAtributoSimples(Atributo atributo);
+
+    public void addAtributoAlterado(Atributo atributo, String prefixo, String Sufixo, boolean isKey);
 
     public Atributos getAtributos();
 
     public boolean hasAtributos();
+
+    public String getNome();
 
 }

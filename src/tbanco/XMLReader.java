@@ -125,11 +125,11 @@ public class XMLReader {
                 }
                 System.out.println("Atributo : " + item.getTextContent() + " restrições: " + source + " tipo " + tipo);
                 jTextArea.append("Atributo : " + item.getTextContent() + " restrições: " + source + " tipo " + tipo + "\n");
-                atributavel.addAtributo(new Atributo(item.getTextContent(), source, tipo));
+                atributavel.addAtributoSimples(new Atributo(item.getTextContent(), source, tipo));
             } else {
                 System.out.println("Atributo : " + item.getTextContent());
                 jTextArea.append("Atributo : " + item.getTextContent() + "\n");
-                atributavel.addAtributo(new Atributo(item.getTextContent()));
+                atributavel.addAtributoSimples(new Atributo(item.getTextContent()));
             }
         }
     }
